@@ -23,17 +23,17 @@ let functionalMovement = new Schema({
         type: Number,
         default: 0.1
     }, 
-    gdb: {
-        type: String,
-        default: ""
-    }, 
     height : {
         type: Number,
         required: [true, 'La altura del kinect del suelo'] 
     }, 
-    depth : {
+    depthMin : {
         type: Number,
-        required: [true, 'La profundidad del kinect del suelo'] 
+        required: [true, 'La profundidad minima del kinect del suelo'] 
+    }, 
+    depthMax : {
+        type: Number,
+        required: [true, 'La profundidad maxima del kinect del suelo'] 
     }, 
     time_stamp : {
         type: Number,
@@ -47,6 +47,16 @@ let functionalMovement = new Schema({
         type: Boolean,
         default: true
     }, 
+    file: {
+        type: Schema.Types.ObjectId,
+        ref: 'File',
+        required: false
+    },
+    stepsFunctionalMovement:[ {
+        type: Schema.Types.ObjectId,
+        ref: 'StepFunctionalMovement',
+        required: false
+    }]
 });
 
 module.exports = moongose.model('FunctionalMovement', functionalMovement);

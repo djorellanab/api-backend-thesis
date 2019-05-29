@@ -6,6 +6,7 @@ const {verificarToken} = require('../../../middleware/authentication');
 
 api.post('/',[verificarToken], functionalMovementController.post);
 api.get('/',[verificarToken], functionalMovementController.get);
+api.get('/metadata/:id',[verificarToken], functionalMovementController.getMetadata);
 api.get('/:id',[verificarToken], functionalMovementController.getById);
 api.put('/:id',[verificarToken], functionalMovementController.update);
 api.delete('/:id',[verificarToken], functionalMovementController.deleteById);

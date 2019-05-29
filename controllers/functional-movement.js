@@ -2,6 +2,8 @@
 
 const {HttpError} = require('../resources/error');
 const {FunctionalMovement} = require('../schemas/functional-movement');
+const fs = require('fs');
+const uuidv1 = require('uuid/v1');
 
 module.exports = {
     post: (req, res, next) =>{
@@ -13,9 +15,11 @@ module.exports = {
             steps: body.steps,
             anglesOfMovement: body.anglesOfMovement,
             movementFactor: body.movementFactor,
-            gdb: body.gdb,
-            time_stamp: date.getDate(),
-            time_stamp_hour: date.getHours()
+            height: body.height,
+            depthMin: body.depthMin,
+            depthMax: body.depthMax,
+            time_stamp:  body.time_stamp || date.getDate(),
+            time_stamp_hour:  body.time_stamp_hour || date.getHours()
         });
         functionalMovement.save((err, functionalMovementDB) => {
             if (err){
@@ -84,6 +88,28 @@ module.exports = {
             res.json({
                 ok: true,
                 functionalMovements: [data]
+            }); 
+        });
+    },
+    getMetadata:  (req, res, next) =>{
+        let id = req.params.id;
+        FunctionalMovement.findById(id)
+        .exec((err, data) =>{
+            if(err) {return next (HttpError.BadRequest);}
+            else if (data === null){return next (HttpError.NotFound);}
+            var filename = `${uuidv1()}.json`;
+            fs.writeFile(`${__dirname}\\${filename}`, JSON.stringify(data) ,{flag: 'w'}, function (err) {
+                if(err) {return next (HttpError.BadRequest);}
+                let _file = fs.createReadStream(`${__dirname}\\${filename}`);
+                var stat = fs.statSync(absolutePath);
+                let _name = data.name.trim();
+                _name = _name.replace(/\s+/g, '-');
+                res.setHeader('Content-Length', stat.size);
+                res.setHeader('Content-Type', 'application/json');
+                res.setHeader('Content-Disposition', `attachment; filename=${_name}.json`);
+                _file.pipe(res);
+                fs.unlink(`${__dirname}\\${filename}`,(err)=>{
+                    if(err) console.log(err);});
             }); 
         });
     }
