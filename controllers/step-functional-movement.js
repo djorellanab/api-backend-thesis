@@ -7,7 +7,7 @@ const { StepFunctionalMovement } = require('../schemas/step-functional-movement'
 const mongoose = require('mongoose');
 
 module.exports = {
-    post: (req, res, next) => {
+    post:  (req, res, next) => {
         try {
             let body = req.body;
             body.forEach(function (el) {
@@ -19,7 +19,7 @@ module.exports = {
                         x: detail.x,
                         y: detail.y
                     });
-                    let _detail = await detailOfStepFunctionalMovement.save();
+                    let _detail =  detailOfStepFunctionalMovement.save();
                     detailsOfStepFunctionalMovement.push(_detail._id);
                 });
                 let stepFunctionalMovement = new StepFunctionalMovement({
@@ -28,9 +28,9 @@ module.exports = {
                     clasification: el.clasification,
                     detailsOfStepFunctionalMovement
                 });
-                let _step = await stepFunctionalMovement.save();
+                let _step =  stepFunctionalMovement.save();
 
-                let fm = await FunctionalMovement.db.collection.update(
+                let fm =  FunctionalMovement.db.collection.update(
                     { "_id": mongoose.Types.ObjectId(body.functionalMovement) },
                     {
                         "$push": {

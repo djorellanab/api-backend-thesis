@@ -39,13 +39,13 @@ let functionalMovement = new Schema({
         type: Number,
         required: [true, 'Fecha de insercion es necesaria'] 
     }, 
-    time_stamp_hour : {
-        type: Number,
-        required: [true, 'Hora de insercion es necesaria'] 
-    }, 
     state : {
         type: Boolean,
         default: true
+    }, 
+    focusJoin  : {
+        type: Number,
+        required: [true, 'centro de analisis es necesario'] 
     }, 
     file: {
         type: Schema.Types.ObjectId,

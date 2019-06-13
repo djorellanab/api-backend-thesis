@@ -4,10 +4,10 @@
 process.env.PORT = process.env.PORT || 3000;
 
 /**
- * Dirección a la base de datos
+ * Dirección a la base de datos 
  */
-process.env.NAMEDB = process.env.NAMEDB  || 'iarna';
-process.env.URLDB = process.env.URLDB || `mongodb://localhost:27017/${process.env.NAMEDB}`;
+process.env.NAMEDB = process.env.NAMEDB  || 'thesis';
+process.env.URLDB = process.env.URLDB || `mongodb://admin:administrador1@ds135207.mlab.com:35207/${process.env.NAMEDB}`;
 
 /**
  * Vencimiento del token

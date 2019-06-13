@@ -1,7 +1,7 @@
 'use strict'
 
 const {HttpError} = require('../resources/error');
-const {FunctionalMovement} = require('../schemas/functional-movement');
+const FunctionalMovement = require('../schemas/functional-movement');
 const fs = require('fs');
 const uuidv1 = require('uuid/v1');
 
@@ -18,11 +18,12 @@ module.exports = {
             height: body.height,
             depthMin: body.depthMin,
             depthMax: body.depthMax,
-            time_stamp:  body.time_stamp || date.getDate(),
-            time_stamp_hour:  body.time_stamp_hour || date.getHours()
+            time_stamp:  body.time_stamp || date.getTime(),
+            focusJoin: body.focusJoin
         });
         functionalMovement.save((err, functionalMovementDB) => {
             if (err){
+                console.log(err);
                 return next (HttpError.BadRequest); 
             }
             res.json({
@@ -32,15 +33,15 @@ module.exports = {
         });
     },
     get: (req, res, next) =>{
-        let desde = parseInt(req.query.desde) || process.env.DESDE;
-        let limite = parseInt(req.query.limite) || process.env.LIMITE;
+        let desde = parseInt(req.query.desde) || parseInt(process.env.DESDE);
+        let limite = parseInt(req.query.limite) || parseInt(process.env.LIMITE);
         let condicion = {state:true};
         FunctionalMovement.find(condicion)
-            .sort({time_stamp:1, time_stamp_hour: 1})
+            .sort({time_stamp:1})
             .limit(limite)
             .skip(desde)
             .exec((err, data) => {
-                if(err){ return next (HttpError.BadRequest);}
+                if(err){  console.log(err); return next (HttpError.BadRequest);}
                 FunctionalMovement.count(condicion, (err, recordsFiltered) =>{
                     if(err){ return next (HttpError.BadRequest);}
                     res.json({
@@ -98,9 +99,10 @@ module.exports = {
             if(err) {return next (HttpError.BadRequest);}
             else if (data === null){return next (HttpError.NotFound);}
             var filename = `${uuidv1()}.json`;
-            fs.writeFile(`${__dirname}\\${filename}`, JSON.stringify(data) ,{flag: 'w'}, function (err) {
+            let absolutePath  =`${__dirname}\\${filename}`;
+            fs.writeFile(absolutePath, JSON.stringify(data) ,{flag: 'w'}, function (err) {
                 if(err) {return next (HttpError.BadRequest);}
-                let _file = fs.createReadStream(`${__dirname}\\${filename}`);
+                let _file = fs.createReadStream(absolutePath);
                 var stat = fs.statSync(absolutePath);
                 let _name = data.name.trim();
                 _name = _name.replace(/\s+/g, '-');
