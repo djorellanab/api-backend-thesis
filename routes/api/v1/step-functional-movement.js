@@ -6,5 +6,6 @@ const {verificarToken} = require('../../../middleware/authentication');
 
 api.post('/',[verificarToken], stepFunctionalMovementController.post);
 api.get('/:id',[verificarToken], stepFunctionalMovementController.getTotalsByStep);
+api.get('/csv/:id',[verificarToken], stepFunctionalMovementController.getCSV);
 
 module.exports = api;

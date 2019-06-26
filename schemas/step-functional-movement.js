@@ -11,6 +11,10 @@ let stepFunctionalMovement = new Schema({
         type: Number,
         required: [true, 'El tiempo de toma de datos se requiere']
     },
+    factorMovement: {
+        type: Number,
+        required: [true, 'El factor de movimiento de los datos se requiere']
+    },
     clasification:{
         type: Boolean,
         required: [true, 'La clasificacion del paso es requerida'] 

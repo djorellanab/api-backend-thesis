@@ -23,7 +23,6 @@ module.exports = {
         });
         functionalMovement.save((err, functionalMovementDB) => {
             if (err){
-                console.log(err);
                 return next (HttpError.BadRequest); 
             }
             res.json({
@@ -83,7 +82,7 @@ module.exports = {
         let id = req.params.id;
         let body = req.body;
 
-        FunctionalMovement.findByIdAndUpdate(id, body, {new: true}, (err, data) =>{
+        FunctionalMovement.findByIdAndUpdate(id, body,  (err, data) =>{
             if(err) {return next (HttpError.BadRequest);}
             else if (data === null){return next (HttpError.NotFound);}
             res.json({

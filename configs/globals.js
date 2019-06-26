@@ -4,6 +4,11 @@
 process.env.PORT = process.env.PORT || 3000;
 
 /**
+ * Configuración de contrasena
+ */
+process.env.SALTROUND = process.env.SALTROUND || 10;
+
+/**
  * Dirección a la base de datos 
  */
 process.env.NAMEDB = process.env.NAMEDB  || 'thesis';
