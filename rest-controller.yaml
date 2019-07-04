@@ -24,33 +24,31 @@ spec:
             memory: 100Mi
         env:
         - name: PORT
-          value: ""
+          value: "8080"
         - name: DBTYPE
-          value: ""
+          value: "mongodb"
         - name: USERDB
-          value: ""
+          value: "est1010114"
         - name: PASSWORDDB
-          value: ""
+          value: "20403232d"
         - name: PATHDB
-          value: ""
+          value: "ds133192.mlab.com"
         - name: PORTDB
-          value: ""
+          value: "33192"
         - name: NAMEDB
-          value: ""
-        - name: DBTYPE
-          value: ""
+          value: "thesis2"
         - name: CADUCIDAD_TOKEN
-          value: ""
+          value: "2592000"
         - name: SEED
-          value: ""
+          value: "3st3-es-3l-Se3D-De-Pr0ducci0n"
         - name: ADMINUSER
-          value: ""
+          value: "djob195@gmail.com"
         - name: ADMINPASSWORD
-          value: ""
+          value: "123456"
         - name: DESDE
-          value: ""
+          value: "0"
         - name: LIMITE
-          value: ""
+          value: "5"
         ports:
         - containerPort: 8080
       volumes:

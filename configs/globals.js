@@ -1,17 +1,17 @@
 /**
  * Configuración de puerto
  */
-process.env.PORT = process.env.PORT || 3001;
+process.env.PORT = process.env.PORT || 3000;
 
 /**
  * Dirección a la base de datos 
  */
 process.env.DBTYPE = process.env.DBTYPE  || 'mongodb';
-process.env.USERDB = process.env.USERDB  || 'admin';
-process.env.PASSWORDDB = process.env.PASSWORDDB  || 'administrador1';
-process.env.PATHDB = process.env.PATHDB  || 'ds135207.mlab.com';
-process.env.PORTDB = process.env.PORTDB  || '35207';
-process.env.NAMEDB = process.env.NAMEDB  || 'thesis';
+process.env.USERDB = process.env.USERDB  || 'est1010114';
+process.env.PASSWORDDB = process.env.PASSWORDDB  || '20403232d';
+process.env.PATHDB = process.env.PATHDB  || 'ds133192.mlab.com';
+process.env.PORTDB = process.env.PORTDB  || '33192';
+process.env.NAMEDB = process.env.NAMEDB  || 'thesis2';
 process.env.URLDB = `${process.env.DBTYPE}://${process.env.USERDB}:${process.env.PASSWORDDB}@${process.env.PATHDB}:${process.env.PORTDB}/${process.env.NAMEDB}`;
 
 /**

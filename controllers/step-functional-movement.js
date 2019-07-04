@@ -47,7 +47,7 @@ module.exports = {
                         }
                     }
                 },(err, data) =>{
-                    if (err) { return next(HttpError.BadRequest); }
+                    if (err) {  console.log(err); return next(HttpError.BadRequest); }
                     else if (data === null) { return next(HttpError.NotFound); }
                     res.json({
                         ok: true,
@@ -55,6 +55,7 @@ module.exports = {
                     });
                 });   
         } catch (_error2) {
+            console.log(_error2);
             return next(HttpError.BadRequest);
         }
     },
@@ -233,13 +234,22 @@ module.exports = {
             .exec((err, data) => {
                 if (err) { return next(HttpError.BadRequest); }
                 else if (data === null) { return next(HttpError.NotFound); }
-                let matriz = "step, factorMovement, join, angle, clasification\r\n";
+                let matriz = "step, factorMovement, ";
+                data.anglesOfMovement = data.anglesOfMovement.sort((a,b) => a>=b);
+                for (let x = 0; x < data.anglesOfMovement.length; x++) {
+                    const element = data.anglesOfMovement[x];
+                    matriz +=  `joint ${element},`;
+                }
+                matriz += "clasification\r\n";
                 for (let x = 0; x < data.stepsFunctionalMovement.length; x++) {
                     const elementStep = data.stepsFunctionalMovement[x];
+                    matriz += `${elementStep.step}, ${elementStep.factorMovement}, `;
+                    elementStep.detailsOfStepFunctionalMovement = elementStep.detailsOfStepFunctionalMovement.sort((a,b) => a.join >= b.join);
                     for (let y = 0; y < elementStep.detailsOfStepFunctionalMovement.length; y++) {
                         const elementDetail = elementStep.detailsOfStepFunctionalMovement[y];
-                        matriz += `${elementStep.step}, ${elementStep.factorMovement}, ${elementDetail.join}, ${elementDetail.angle}, ${elementStep.clasification}\r\n`;
+                        matriz += `${elementDetail.angle}, `;
                     }
+                    matriz += `${+elementStep.clasification}\r\n`;
                 }
                 var filename = `${uuidv1()}.csv`;
                 let absolutePath = `${__dirname}\\${filename}`;
